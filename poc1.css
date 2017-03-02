@@ -1,0 +1,140 @@
+/*Mikael A Mendoza COMP484/L CSUN Summer 2016 */
+
+/* whole page rules*/
+
+body{
+    min-height:100%;
+    margin:0;
+    padding:0;
+    background-color: white;
+    font-family:  trebuchet, sans-serif;
+}
+
+h2,h3, p{
+    padding-left:1%;
+}
+
+h2{font-size: x-large}
+
+p, h3{ font-size:medium}
+
+
+/* Logo image settings */
+.image{
+    float:left;
+    height:100%;
+    width:auto;
+}
+
+/*Top panel rules */
+#image_container{
+    position:absolute;
+    top:0;
+    z-index:0;
+    height:10%;
+    width:100%;
+    background-color:#2f006d;
+}
+
+
+/* VIDEO PANEL. 3 containers: video_container, comment_player, comment_panel*/
+
+#video_area{    /*div for whole video area, all 3 containers*/
+    position:absolute;
+    top:10%;
+    z-index:0;
+    height:70%;
+    width:100%;
+}
+
+#video_container{   /*contains main video */
+    position:absolute;
+    height:100%;
+    width:70%;
+    background-color:black;
+    padding-left:1%;
+}
+
+#main_video{    
+    height:90%;
+    width:auto;
+    padding:1%;
+}
+
+#comments_panel{    /*contains response videos thumbnails and descriptions*/
+    position:absolute;
+    top:0;
+    z-index:2;
+    right:0;
+    height:100%;
+    width:30%;
+    color:white;
+    background-color:#7d48ff;
+    overflow-y:scroll;
+    margin-bottom:1%;
+}
+
+#comments_panel > h3{
+    font-size:small;
+    text-align:center;
+}
+
+#player_container{    /*slide-out panel that plays the response videos */
+    position:absolute;
+    z-index:1;
+ /*left:65%; normally, when slid out left:35%*/
+    background-color: #7d48ff;
+    opacity:0.90;
+    height:100%;
+    max-width:100%;
+    text-align:right;
+    color:white;
+}
+
+#slide_button{
+    float:left;
+    height:25%;
+    width:auto;
+    display:block;
+    margin:auto;
+}
+
+#comment_video{ /*settings for the response video player */
+    height:40%;
+    padding-left:5%;
+    padding-right:5%;
+    padding-top:30%;
+}
+
+.thumbnail{
+    height:25%;
+    width:auto;
+    display:block;
+    margin:auto;
+    margin-bottom:1%;
+}
+
+
+/*Bottom container, includes the Upload button and the Main Video's description */
+#bottom_controls{
+    z-index:0;    
+    position:absolute;
+    top:77%;
+    height:auto;
+    width:90%;
+    display:block;
+    /*margin:auto;*/
+    padding-left:5%;
+    padding-top:2%;
+}
+
+
+#description{
+    
+}
+
+#upload_controls{
+    float:right;
+    margin-right:25%;
+    background-color:#7d48ff;
+}

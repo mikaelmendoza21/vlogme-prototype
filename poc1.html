@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<!-- Mikael A Mendoza/COMP467/CSUN Fall 2016-->
+<html>
+        <head>
+            <meta charset="utf-8"/>
+            <link rel="StyleSheet" type = "text/css" href = "poc1.css" media = " all" />
+            <title>VlogMe (Proof of Concept)</title>
+            <script type="text/javascript">
+
+                var main_video; //reference to the Main video
+                var panel;  //comments panel
+                var response_point = 45; /*(in seconds) variable for a point in the main video containing comment responses. Eventually can be made an array of response points*/
+                                        
+                var refresh_interval = 5000;    //(in milliseconds) interval to check current time on Main video
+                var accuracy = 15;   //(in seconds) range within response point for a comment to be on the panel
+
+                
+                //This function slides the comment_player out when a comment is clicked, plays it and slides back in
+                function toggle_slide(current_comment){
+                    console.log("In toggle_slide Status="+ parseInt(status));
+                    console.log("current_comment ="+ current_comment);
+                    var div = document.getElementById("comment_player");
+                    
+                    //if a comment is clicked, select it to play
+                    var comment_playing = "comment"+ current_comment + ".mp4";    
+                        
+                    
+                     //slide out player
+                    console.log("in slide out player");
+                    //choose correct comment
+                    console.log("Sliding out Comment response");
+                    main_video.pause(); //pause the main video before playing comment
+                    var comment_playing = "comment"+ current_comment + ".mp4";
+                    div.innerHTML="<div id=\"player_container\" style=\"right:30%;\">"+
+                                "<video type=\"video/mp4\" id=\"comment_video\" controls=\"true\" autoplay\>" +
+                                "<source src=\"" + comment_playing + "\"/><br>"+
+                                "<\div>";
+                     
+                    setInterval(function(){if(comment_video.ended == true){ //check if comment has ended
+                                        div.innerHTML="<div id=\"player_container\" style=\"right:30%\">"+
+                                        "<\div>";
+                                        main_video.play();
+                                        clearInterval();
+                                        }
+                                        else{};
+                                        },1000);
+                                        
+                    //return to main
+                    main();
+                }
+                
+                
+                /*the following fct is responsible for dynamically refreshing the comments panel based on
+                the current point in the main video*/
+                function refresh_comments(){  
+                    console.log("In refresh_comments");
+                    console.log("Current time ="+ main_video.currentTime);
+                    console.log("response_point - main_video.currentTime ="+
+                                parseInt(response_point - main_video.currentTime));
+                    //Refresh comments panel, add the comments for the upcoming response point
+                        if((response_point - main_video.currentTime) < accuracy &&
+                            (response_point - main_video.currentTime)>0){
+                            console.log("populating panel");
+                        
+                            //populate panel
+                            panel.innerHTML = "<h2>Comments</h2>"+
+                                "<p>@ "+ response_point + " seconds</p>"+
+                                "<input type=\"image\" id=\"comment1\" class=\"thumbnail\" src=\"comment1.jpg\"/>"+
+                                "<h3>by user33 on 10/18/2016</h3>"+
+                                "<h3><em>\"The most famous scene in the film\"</em></h3>"+
+                                "<br><br>"+
+                                "<input type=\"image\" id=\"comment2\" class=\"thumbnail\" src=\"comment2.jpg\"/>"+
+                                "<h3>by user55 on 10/18/2016</h3>"+
+                                "<h3><em>\"Here's that pixies song\"</em></h3>";
+                            
+                            //Listen for Events on newly refreshed panel items
+                            var comment1= document.getElementById("comment1");
+                            var comment2= document.getElementById("comment2");
+                            comment1.addEventListener("click",function(){toggle_slide(1);}, false);
+                            comment2.addEventListener("click",function(){toggle_slide(2);}, false);
+                        }
+                        else{
+                            panel.innerHTML="<h2>Comments</h2><br><h3>User comments will appear here<h3>"; 
+                            //no user comments at the current time
+                        }; //not within range of a response point
+                }
+
+                
+                //Driver function
+                function main(){
+                console.log("In main");
+                main_video = document.getElementById("main_video");
+                setInterval(function(){if(main_video.paused == false && main_video.ended ==false)
+                                            refresh_comments();
+                                            else{};}, refresh_interval);
+               }
+               
+               function init(){
+               console.log("window loaded");
+                main_video = document.getElementById("main_video");
+                panel = document.getElementById("comments_panel");
+                status=0;
+                console.log("calling main");
+                main();
+               }
+               
+               window.addEventListener("load", init,false);
+
+            </script>
+        </head>
+            <body>
+                        <div id="image_container">
+                            <img  class="image" src="vlogMe_logo.JPG"/>
+                        </div>
+                        <div id="video_area">
+                            <div id="video_container">
+                                <video id="main_video" controls="true" autoplay/>
+                                    <source src="main_video.mp4" type="video/mp4">
+                                </video>
+                            </div>
+                            <div id="comments_panel">
+                                <h2>Comments</h2>
+                                <br><h3>User comments will appear here<h3>
+                            </div>
+                            <div id="comment_player">
+                                <div id="player_container" style="right:30%">
+                                </div>
+                            </div>
+                        </div>
+                        <div id="bottom_controls">
+                            <div id="upload_controls"><input id="comment_button" type="button" value="Upload Comment"/>
+                            </div>
+                            <div id="description">
+                            <h2>Un Chien Andalou (clip)</h2>
+                            <p>A short clip of the first couple of minutes of "Un Chien Andalou",
+                            a surrealist film by Salvador Dali and Luis Buñuel</p>
+                            </div>
+                        </div>
+            </body>
+</html>
